@@ -2,8 +2,8 @@
 Your project's description...
 
 ## Environments
-- Preview: https://main--aem-ue-authoring--aem-training.hlx.page/
-- Live: https://main--aem-ue-authoring--aem-training.hlx.live/
+- Preview: https://main--aem-ue-authoring--aem-training.aem.page/
+- Live: https://main--aem-ue-authoring--aem-training.aem.live/
 
 ## Installation
 
