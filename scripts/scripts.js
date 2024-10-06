@@ -191,7 +191,7 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
-  await window.hlx.plugins.run('loadEager');
+//  await window.hlx.plugins.run('loadEager');
 
   // load demo config
   await loadDemoConfig();
@@ -256,7 +256,7 @@ async function loadLazy(doc) {
   // Mark customer as having viewed the page once
   localStorage.setItem('franklin-visitor-returning', true);
 
-  window.hlx.plugins.run('loadLazy');
+//  window.hlx.plugins.run('loadLazy');
 }
 
 /**
@@ -266,8 +266,8 @@ async function loadLazy(doc) {
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => {
-    window.hlx.plugins.load('delayed');
-    window.hlx.plugins.run('loadDelayed');
+//    window.hlx.plugins.load('delayed');
+//    window.hlx.plugins.run('loadDelayed');
     return import('./delayed.js');
   }, 3000);
   // load anything that can be postponed to the latest here
