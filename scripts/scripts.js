@@ -34,6 +34,9 @@ const AUDIENCES = {
   'returning-visitor': () => !!localStorage.getItem('franklin-visitor-returning'),
 };
 
+/** 
+ * Fix JS error
+ * 
 window.hlx.plugins.add('rum-conversion', {
   url: '/plugins/rum-conversion/src/index.js',
   load: 'lazy',
@@ -47,6 +50,8 @@ window.hlx.plugins.add('experimentation', {
   load: 'eager',
   url: '/plugins/experimentation/src/index.js',
 });
+*/
+
 
 /**
  * Determine if we are serving content for the block-library, if so don't load the header or footer
