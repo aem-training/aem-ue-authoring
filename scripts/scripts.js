@@ -274,9 +274,9 @@ function loadDelayed() {
 }
 
 async function loadPage() {
-  await window.hlx.plugins.load('eager');
+//  await window.hlx.plugins.load('eager');
   await loadEager(document);
-  await window.hlx.plugins.load('lazy');
+//  await window.hlx.plugins.load('lazy');
   await loadLazy(document);
  // const setupAnalytics = setupAnalyticsTrackingWithAlloy(document);
   loadDelayed();
