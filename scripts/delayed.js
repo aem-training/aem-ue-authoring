@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-cycle
-import { fetchPlaceholders} from './aem.js';
-//import loadCookieConsent from './cookie-consent/lib-cookie-consent.js';
-//import { analyticsSetConsent } from './analytics/lib-analytics.js';
+import { fetchPlaceholders } from './aem.js';
+// import loadCookieConsent from './cookie-consent/lib-cookie-consent.js';
+// import { analyticsSetConsent } from './analytics/lib-analytics.js';
 
 // Core Web Vitals RUM collection
-//sampleRUM('cwv');
+// sampleRUM('cwv');
 
 // add more delayed functionality here
 
@@ -12,10 +12,10 @@ import { fetchPlaceholders} from './aem.js';
 try {
   await fetchPlaceholders();
 } catch (e) { /* ignore */ }
-//loadCookieConsent();
+// loadCookieConsent();
 
 // also check consent stored in localstorage used while developing
-//const analyticsConsent = localStorage.getItem('consent_status_ANALYTICS');
-//if (analyticsConsent) {
+// const analyticsConsent = localStorage.getItem('consent_status_ANALYTICS');
+// if (analyticsConsent) {
 //  await analyticsSetConsent(analyticsConsent === 'ALLOW');
-//}
+// }

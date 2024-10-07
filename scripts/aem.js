@@ -215,7 +215,7 @@ function toCamelCase(name) {
 
 /**
  * Merged from older version of lib-franklin
- * 
+ *
  * Gets all the metadata elements that are in the given scope.
  * @param {String} scope The scope/prefix for the metadata
  * @returns an array of HTMLElement nodes that match the given scope
@@ -230,7 +230,6 @@ export function getAllMetadata(scope) {
       return res;
     }, {});
 }
-
 
 /**
  * Extracts the config from a block.

@@ -1,8 +1,6 @@
 import {
   sampleRUM,
   buildBlock,
-  getAllMetadata,
-  getMetadata,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -30,16 +28,10 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
 // Define the custom audiences mapping for experience decisioning
-const AUDIENCES = {
-  mobile: () => window.innerWidth < 600,
-  desktop: () => window.innerWidth >= 600,
-  'new-visitor': () => !localStorage.getItem('franklin-visitor-returning'),
-  'returning-visitor': () => !!localStorage.getItem('franklin-visitor-returning'),
-};
 
-/** 
+/**
  * Fix JS error
- * 
+ *
 window.hlx.plugins.add('rum-conversion', {
   url: '/plugins/rum-conversion/src/index.js',
   load: 'lazy',
@@ -54,7 +46,6 @@ window.hlx.plugins.add('experimentation', {
   url: '/plugins/experimentation/src/index.js',
 });
 */
-
 
 /**
  * Determine if we are serving content for the block-library, if so don't load the header or footer
@@ -191,14 +182,14 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
-//  await window.hlx.plugins.run('loadEager');
+  //  await window.hlx.plugins.run('loadEager');
 
   // load demo config
   await loadDemoConfig();
 
   const main = doc.querySelector('main');
   if (main) {
- //   await initAnalyticsTrackingQueue();
+    //   await initAnalyticsTrackingQueue();
     decorateMain(main);
     await waitForLCP(LCP_BLOCKS);
   }
@@ -265,29 +256,24 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => {
-//    window.hlx.plugins.load('delayed');
-//    window.hlx.plugins.run('loadDelayed');
-    return import('./delayed.js');
-  }, 3000);
+  window.setTimeout(
+    () => import('./delayed.js'),
+    3000,
+  );
   // load anything that can be postponed to the latest here
 }
 
 async function loadPage() {
-//  await window.hlx.plugins.load('eager');
   await loadEager(document);
-//  await window.hlx.plugins.load('lazy');
   await loadLazy(document);
- // const setupAnalytics = setupAnalyticsTrackingWithAlloy(document);
   loadDelayed();
- // await setupAnalytics;
 }
 
 const cwv = {};
 
 // Forward the RUM CWV cached measurements to edge using WebSDK before the page unloads
 window.addEventListener('beforeunload', () => {
-  if (!Object.keys(cwv).length) return;
+  if (!Object.keys(cwv).length) ;
 //  analyticsTrackCWV(cwv);
 });
 
@@ -298,7 +284,7 @@ sampleRUM.always.on('cwv', async (data) => {
 });
 
 // sampleRUM.always.on('404', analyticsTrack404);
-//sampleRUM.always.on('error', analyticsTrackError);
+// sampleRUM.always.on('error', analyticsTrackError);
 
 // Declare conversionEvent, bufferTimeoutId and tempConversionEvent,
 // outside the convert function to persist them for buffering between
@@ -335,7 +321,7 @@ sampleRUM.always.on('convert', (data) => {
         // If there is partial form conversion data,
         // set the timeout buffer to wait for additional data
         bufferTimeoutId = setTimeout(async () => {
- //    analyticsTrackConversion({ ...conversionEvent });
+          //    analyticsTrackConversion({ ...conversionEvent });
           tempConversionEvent = undefined;
           conversionEvent = undefined;
         }, CONVERSION_EVENT_TIMEOUT_MS);
@@ -344,7 +330,7 @@ sampleRUM.always.on('convert', (data) => {
     return;
   }
 
-//  analyticsTrackConversion({ ...data });
+  //  analyticsTrackConversion({ ...data });
   tempConversionEvent = undefined;
   conversionEvent = undefined;
 });

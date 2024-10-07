@@ -11,13 +11,10 @@
  */
 
 (function () {
-  'use strict';
-
   if (document.documentMode && document.documentMode < 11) {
     console.warn('The Adobe Experience Cloud Web SDK does not support IE 10 and below.');
     return;
   }
-
 
   /*
   Copyright 2019 Adobe. All rights reserved.
@@ -30,16 +27,16 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
   */
-  var createInstanceFunction = (function (executeCommand) {
+  const createInstanceFunction = (function (executeCommand) {
     return function (args) {
       // Would use destructuring, but destructuring doesn't work on IE
       // without polyfilling Symbol.
       // https://github.com/babel/babel/issues/7597
-      var resolve = args[0];
-      var reject = args[1];
-      var userProvidedArgs = args[2];
-      var commandName = userProvidedArgs[0];
-      var options = userProvidedArgs[1];
+      const resolve = args[0];
+      const reject = args[1];
+      const userProvidedArgs = args[2];
+      const commandName = userProvidedArgs[0];
+      const options = userProvidedArgs[1];
       executeCommand(commandName, options).then(resolve, reject);
     };
   });
@@ -55,13 +52,13 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
   */
-  var CHROME = "Chrome";
-  var EDGE$1 = "Edge";
-  var EDGE_CHROMIUM = "EdgeChromium";
-  var FIREFOX = "Firefox";
-  var IE = "IE";
-  var SAFARI = "Safari";
-  var UNKNOWN = "Unknown";
+  const CHROME = 'Chrome';
+  const EDGE$1 = 'Edge';
+  const EDGE_CHROMIUM = 'EdgeChromium';
+  const FIREFOX = 'Firefox';
+  const IE = 'IE';
+  const SAFARI = 'Safari';
+  const UNKNOWN = 'Unknown';
 
   /*
   Copyright 2019 Adobe. All rights reserved.
@@ -81,7 +78,7 @@
    * @param {*} item The item for which to search.
    * @returns {boolean}
    */
-  var includes = (function (arr, item) {
+  const includes = (function (arr, item) {
     return arr.indexOf(item) !== -1;
   });
 
@@ -99,8 +96,8 @@
   // we don't know. We also assume "unknown" browsers support third-party cookies,
   // though we don't really know that either. We're making best guesses.
 
-  var browsersSupportingThirdPartyCookie = [CHROME, EDGE$1, EDGE_CHROMIUM, IE, UNKNOWN];
-  var areThirdPartyCookiesSupportedByDefault = (function (browser) {
+  const browsersSupportingThirdPartyCookie = [CHROME, EDGE$1, EDGE_CHROMIUM, IE, UNKNOWN];
+  const areThirdPartyCookiesSupportedByDefault = (function (browser) {
     return includes(browsersSupportingThirdPartyCookie, browser);
   });
 
@@ -111,9 +108,9 @@
   */
   /* eslint-disable no-unused-vars */
 
-  var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-  var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
-  var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+  const { getOwnPropertySymbols } = Object;
+  const hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+  const propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
   function toObject(val) {
     if (val === null || val === undefined) {
@@ -130,8 +127,7 @@
       } // Detect buggy property enumeration order in older V8 versions.
       // https://bugs.chromium.org/p/v8/issues/detail?id=4118
 
-
-      var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+      const test1 = new String('abc'); // eslint-disable-line no-new-wrappers
 
       test1[5] = 'de';
 
@@ -139,28 +135,24 @@
         return false;
       } // https://bugs.chromium.org/p/v8/issues/detail?id=3056
 
+      const test2 = {};
 
-      var test2 = {};
-
-      for (var i = 0; i < 10; i++) {
-        test2['_' + String.fromCharCode(i)] = i;
+      for (let i = 0; i < 10; i++) {
+        test2[`_${String.fromCharCode(i)}`] = i;
       }
 
-      var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-        return test2[n];
-      });
+      const order2 = Object.getOwnPropertyNames(test2).map((n) => test2[n]);
 
       if (order2.join('') !== '0123456789') {
         return false;
       } // https://bugs.chromium.org/p/v8/issues/detail?id=3056
 
-
-      var test3 = {};
-      'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+      const test3 = {};
+      'abcdefghijklmnopqrst'.split('').forEach((letter) => {
         test3[letter] = letter;
       });
 
-      if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+      if (Object.keys({ ...test3 }).join('') !== 'abcdefghijklmnopqrst') {
         return false;
       }
 
@@ -171,15 +163,15 @@
     }
   }
 
-  var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
-    var from;
-    var to = toObject(target);
-    var symbols;
+  const objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
+    let from;
+    const to = toObject(target);
+    let symbols;
 
-    for (var s = 1; s < arguments.length; s++) {
+    for (let s = 1; s < arguments.length; s++) {
       from = Object(arguments[s]);
 
-      for (var key in from) {
+      for (const key in from) {
         if (hasOwnProperty$1.call(from, key)) {
           to[key] = from[key];
         }
@@ -188,7 +180,7 @@
       if (getOwnPropertySymbols) {
         symbols = getOwnPropertySymbols(from);
 
-        for (var i = 0; i < symbols.length; i++) {
+        for (let i = 0; i < symbols.length; i++) {
           if (propIsEnumerable.call(from, symbols[i])) {
             to[symbols[i]] = from[symbols[i]];
           }
@@ -199,18 +191,17 @@
     return to;
   };
 
-  var reactorObjectAssign = objectAssign;
+  const reactorObjectAssign = objectAssign;
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+  const commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
-  var js_cookie = createCommonjsModule(function (module, exports) {
-
+  const js_cookie = createCommonjsModule((module, exports) => {
     (function (factory) {
-      var registeredInModuleLoader;
+      let registeredInModuleLoader;
 
       {
         module.exports = factory();
@@ -218,23 +209,23 @@
       }
 
       if (!registeredInModuleLoader) {
-        var OldCookies = window.Cookies;
-        var api = window.Cookies = factory();
+        const OldCookies = window.Cookies;
+        const api = window.Cookies = factory();
 
         api.noConflict = function () {
           window.Cookies = OldCookies;
           return api;
         };
       }
-    })(function () {
+    }(() => {
       function extend() {
-        var i = 0;
-        var result = {};
+        let i = 0;
+        const result = {};
 
         for (; i < arguments.length; i++) {
-          var attributes = arguments[i];
+          const attributes = arguments[i];
 
-          for (var key in attributes) {
+          for (const key in attributes) {
             result[key] = attributes[key];
           }
         }
@@ -255,18 +246,17 @@
           }
 
           attributes = extend({
-            path: '/'
+            path: '/',
           }, api.defaults, attributes);
 
           if (typeof attributes.expires === 'number') {
             attributes.expires = new Date(new Date() * 1 + attributes.expires * 864e+5);
           } // We're using "expires" because "max-age" is not supported by IE
 
-
           attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
 
           try {
-            var result = JSON.stringify(value);
+            const result = JSON.stringify(value);
 
             if (/^[\{\[]/.test(result)) {
               value = result;
@@ -275,14 +265,14 @@
 
           value = converter.write ? converter.write(value, key) : encodeURIComponent(String(value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
           key = encodeURIComponent(String(key)).replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent).replace(/[\(\)]/g, escape);
-          var stringifiedAttributes = '';
+          let stringifiedAttributes = '';
 
-          for (var attributeName in attributes) {
+          for (const attributeName in attributes) {
             if (!attributes[attributeName]) {
               continue;
             }
 
-            stringifiedAttributes += '; ' + attributeName;
+            stringifiedAttributes += `; ${attributeName}`;
 
             if (attributes[attributeName] === true) {
               continue;
@@ -294,11 +284,10 @@
             // not including, the first %x3B (";") character.
             // ...
 
-
-            stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
+            stringifiedAttributes += `=${attributes[attributeName].split(';')[0]}`;
           }
 
-          return document.cookie = key + '=' + value + stringifiedAttributes;
+          return document.cookie = `${key}=${value}${stringifiedAttributes}`;
         }
 
         function get(key, json) {
@@ -306,22 +295,22 @@
             return;
           }
 
-          var jar = {}; // To prevent the for loop in the first place assign an empty array
+          const jar = {}; // To prevent the for loop in the first place assign an empty array
           // in case there are no cookies at all.
 
-          var cookies = document.cookie ? document.cookie.split('; ') : [];
-          var i = 0;
+          const cookies = document.cookie ? document.cookie.split('; ') : [];
+          let i = 0;
 
           for (; i < cookies.length; i++) {
-            var parts = cookies[i].split('=');
-            var cookie = parts.slice(1).join('=');
+            const parts = cookies[i].split('=');
+            let cookie = parts.slice(1).join('=');
 
             if (!json && cookie.charAt(0) === '"') {
               cookie = cookie.slice(1, -1);
             }
 
             try {
-              var name = decode(parts[0]);
+              const name = decode(parts[0]);
               cookie = (converter.read || converter)(cookie, name) || decode(cookie);
 
               if (json) {
@@ -344,20 +333,20 @@
         api.set = set;
 
         api.get = function (key) {
-          return get(key, false
+          return get(key, false,
           /* read as raw */
           );
         };
 
         api.getJSON = function (key) {
-          return get(key, true
+          return get(key, true,
           /* read as json */
           );
         };
 
         api.remove = function (key, attributes) {
           set(key, '', extend(attributes, {
-            expires: -1
+            expires: -1,
           }));
         };
 
@@ -366,8 +355,8 @@
         return api;
       }
 
-      return init(function () {});
-    });
+      return init(() => {});
+    }));
   });
 
   /*
@@ -381,11 +370,11 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
   */
-  var cookieJar = {
+  const cookieJar = {
     get: js_cookie.get,
     set: js_cookie.set,
     remove: js_cookie.remove,
-    withConverter: js_cookie.withConverter
+    withConverter: js_cookie.withConverter,
   };
 
   /*
@@ -405,29 +394,27 @@
    * @param {*} value
    * @returns {boolean}
    */
-  var isNil = (function (value) {
+  const isNil = (function (value) {
     return value == null;
   });
 
   function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
+    const keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      enumerableOnly && (symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      })), keys.push.apply(keys, symbols);
+      let symbols = Object.getOwnPropertySymbols(object);
+      enumerableOnly && (symbols = symbols.filter((sym) => Object.getOwnPropertyDescriptor(object, sym).enumerable)), keys.push.apply(keys, symbols);
     }
 
     return keys;
   }
 
   function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = null != arguments[i] ? arguments[i] : {};
-      i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+    for (let i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+      i % 2 ? ownKeys(Object(source), !0).forEach((key) => {
         _defineProperty(target, key, source[key]);
-      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach((key) => {
         Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
@@ -436,22 +423,22 @@
   }
 
   function _typeof(obj) {
-    "@babel/helpers - typeof";
+    '@babel/helpers - typeof';
 
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) {
       return typeof obj;
     } : function (obj) {
-      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      return obj && typeof Symbol === 'function' && obj.constructor === Symbol && obj !== Symbol.prototype ? 'symbol' : typeof obj;
     }, _typeof(obj);
   }
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
-        value: value,
+        value,
         enumerable: true,
         configurable: true,
-        writable: true
+        writable: true,
       });
     } else {
       obj[key] = value;
@@ -462,9 +449,10 @@
 
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null) return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
+    const target = {};
+    const sourceKeys = Object.keys(source);
+    let key; let
+      i;
 
     for (i = 0; i < sourceKeys.length; i++) {
       key = sourceKeys[i];
@@ -478,12 +466,13 @@
   function _objectWithoutProperties(source, excluded) {
     if (source == null) return {};
 
-    var target = _objectWithoutPropertiesLoose(source, excluded);
+    const target = _objectWithoutPropertiesLoose(source, excluded);
 
-    var key, i;
+    let key; let
+      i;
 
     if (Object.getOwnPropertySymbols) {
-      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+      const sourceSymbolKeys = Object.getOwnPropertySymbols(source);
 
       for (i = 0; i < sourceSymbolKeys.length; i++) {
         key = sourceSymbolKeys[i];
@@ -513,18 +502,19 @@
   }
 
   function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+    if (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null || iter['@@iterator'] != null) return Array.from(iter);
   }
 
   function _iterableToArrayLimit(arr, i) {
-    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    let _i = arr == null ? null : typeof Symbol !== 'undefined' && arr[Symbol.iterator] || arr['@@iterator'];
 
     if (_i == null) return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
+    const _arr = [];
+    let _n = true;
+    let _d = false;
 
-    var _s, _e;
+    let _s; let
+      _e;
 
     try {
       for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
@@ -537,7 +527,7 @@
       _e = err;
     } finally {
       try {
-        if (!_n && _i["return"] != null) _i["return"]();
+        if (!_n && _i.return != null) _i.return();
       } finally {
         if (_d) throw _e;
       }
@@ -548,11 +538,11 @@
 
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+    if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
+    let n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === 'Object' && o.constructor) n = o.constructor.name;
+    if (n === 'Map' || n === 'Set') return Array.from(o);
+    if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
   function _arrayLikeToArray(arr, len) {
@@ -564,11 +554,11 @@
   }
 
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    throw new TypeError('Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.');
   }
 
   function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    throw new TypeError('Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.');
   }
 
   /**
@@ -577,8 +567,8 @@
    * @returns {boolean}
    */
 
-  var isObject = (function (value) {
-    return !isNil(value) && !Array.isArray(value) && _typeof(value) === "object";
+  const isObject = (function (value) {
+    return !isNil(value) && !Array.isArray(value) && _typeof(value) === 'object';
   });
 
   /*
@@ -593,8 +583,8 @@
   governing permissions and limitations under the License.
   */
 
-  var deepAssignObject = function deepAssignObject(target, source) {
-    Object.keys(source).forEach(function (key) {
+  const deepAssignObject = function deepAssignObject(target, source) {
+    Object.keys(source).forEach((key) => {
       if (isObject(target[key]) && isObject(source[key])) {
         deepAssignObject(target[key], source[key]);
         return;
@@ -612,21 +602,18 @@
    * // { a: 'a', b: 'B', c: 'c' }
    */
 
-
-  var deepAssign = (function (target) {
+  const deepAssign = (function (target) {
     if (isNil(target)) {
       throw new TypeError('deepAssign "target" cannot be null or undefined');
     }
 
-    var result = Object(target);
+    const result = Object(target);
 
     for (var _len = arguments.length, sources = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       sources[_key - 1] = arguments[_key];
     }
 
-    sources.forEach(function (source) {
-      return deepAssignObject(result, Object(source));
-    });
+    sources.forEach((source) => deepAssignObject(result, Object(source)));
     return result;
   });
 
@@ -650,10 +637,10 @@
    * @returns {Function}
    */
 
-  var createMerger = (function (content, key) {
+  const createMerger = (function (content, key) {
     return function (updates) {
-      var propertyPath = key.split(".");
-      var hostObjectForUpdates = propertyPath.reduce(function (obj, propertyName) {
+      const propertyPath = key.split('.');
+      const hostObjectForUpdates = propertyPath.reduce((obj, propertyName) => {
         obj[propertyName] = obj[propertyName] || {};
         return obj[propertyName];
       }, content);
@@ -677,8 +664,8 @@
    * Allows callbacks to be registered and then later called. When the
    * callbacks are called, their responses are combined into a single promise.
    */
-  var createCallbackAggregator = (function () {
-    var callbacks = [];
+  const createCallbackAggregator = (function () {
+    const callbacks = [];
     return {
       add: function add(callback) {
         callbacks.push(callback);
@@ -692,10 +679,8 @@
         // Promise.all, it's currently useful everywhere this is used and
         // reduces repetitive code. We can factor it out later if we want
         // to make this utility more "pure".
-        return Promise.all(callbacks.map(function (callback) {
-          return callback.apply(void 0, args);
-        }));
-      }
+        return Promise.all(callbacks.map((callback) => callback.apply(void 0, args)));
+      },
     };
   });
 
@@ -710,17 +695,17 @@
   OF ANY KIND, either express or implied. See the License for the specific language
   governing permissions and limitations under the License.
   */
-  var createLoggingCookieJar = (function (_ref) {
-    var logger = _ref.logger,
-        cookieJar = _ref.cookieJar;
+  const createLoggingCookieJar = (function (_ref) {
+    const { logger } = _ref;
+    const { cookieJar } = _ref;
     return _objectSpread2(_objectSpread2({}, cookieJar), {}, {
       set: function set(key, value, options) {
-        logger.info("Setting cookie", _objectSpread2({
+        logger.info('Setting cookie', _objectSpread2({
           name: key,
-          value: value
+          value,
         }, options));
         cookieJar.set(key, value, options);
-      }
+      },
     });
   });
 
@@ -739,9 +724,9 @@
   /**
    * Sequences tasks.
    */
-  var createTaskQueue = (function () {
-    var queueLength = 0;
-    var lastPromiseInQueue = Promise.resolve();
+  const createTaskQueue = (function () {
+    let queueLength = 0;
+    let lastPromiseInQueue = Promise.resolve();
     return {
       /**
        * Add a task to the queue. If no task is currenty running,
@@ -755,8 +740,8 @@
       addTask: function addTask(task) {
         queueLength += 1;
 
-        var lastPromiseFulfilledHandler = function lastPromiseFulfilledHandler() {
-          return task().finally(function () {
+        const lastPromiseFulfilledHandler = function lastPromiseFulfilledHandler() {
+          return task().finally(() => {
             queueLength -= 1;
           });
         };
@@ -772,7 +757,7 @@
        */
       get length() {
         return queueLength;
-      }
+      },
 
     };
   });
@@ -11655,4 +11640,4 @@
   */
   core();
 
-})();
+}());

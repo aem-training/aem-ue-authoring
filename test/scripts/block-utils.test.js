@@ -3,6 +3,7 @@
 
 import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
+// eslint-disable-next-line import/no-unresolved
 import sinon from 'sinon';
 
 let blockUtils;
