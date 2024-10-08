@@ -244,13 +244,13 @@ main .form-file-wrapper .file-description button {
     margin: 0 auto;
 }
 
-@media (min-width: 576px) {
+@media (width >= 576px) {
     :root {
         --form-width: 540px;
     }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
     :root {
         --form-width: 740px;
     }
@@ -260,7 +260,7 @@ main .form-file-wrapper .file-description button {
     }
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
     :root {
         --form-width: 1200px;
     }
@@ -276,7 +276,7 @@ main form .form-fieldset-wrapper {
     flex: 1 0 auto;
 } */
 
-@media (min-width: 1200px), (min-width: 992px) {
+@media (width >= 1200px), (width >= 992px) {
     :root {
         --form-columns: 2;
     }
